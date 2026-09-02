@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>امزون ذي قار | المتجر الإلكتروني الشامل</title>
+    <!-- Bootstrap RTL CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --brand-primary: #f3a847; /* اللون البرتقالي الذهبي من الشعار */
+            --brand-secondary: #e47911;
+            --dark-header: #11161d;
+            --sub-header: #1d2531;
+            --bg-light: #f4f5f7;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: system-ui, -apple-system, sans-serif;
+            padding-bottom: 70px;
+        }
+
+        /* Header الرئيسي */
+        .main-header {
+            background-color: var(--dark-header);
+            border-bottom: 2px solid var(--brand-primary);
+        }
+
+        .brand-logo-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-logo-img {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        .brand-logo-text {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fff !important;
+        }
+
+        .brand-logo-text span {
+            color: var(--brand-primary);
+        }
+
+        /* شريط القوائم العلوية */
+        .sub-header {
+            background-color: var(--sub-header);
+        }
+
+        .btn-categories-menu {
+            background-color: var(--brand-primary);
+            color: #11161d !important;
+            font-weight: bold;
+            border-radius: 6px;
+            padding: 8px 18px;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-categories-menu:hover {
+            background-color: var(--brand-secondary);
+            color: #fff !important;
+        }
+
+        /* تنسيقات المنيو الجانبي */
+        .offcanvas-header {
+            background-color: var(--dark-header);
+            color: #fff;
+            border-bottom: 2px solid var(--brand-primary);
+        }
+
+        .category-menu-list .list-group-item {
+            border: none;
+            border-bottom: 1px solid #eee;
+            padding: 12px 15px;
+            font-weight: 600;
+        }
+
+        .category-menu-list a {
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .category-menu-list a:hover {
+            color: var(--brand-secondary);
+        }
+
+        .sidebar-accordion .accordion-button {
+            padding: 12px 15px;
+            font-weight: 600;
+            color: #333;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .sidebar-accordion .accordion-button:not(.collapsed) {
+            color: var(--brand-secondary);
+            background-color: #fff8ef;
+        }
+
+        .sidebar-accordion .accordion-body {
+            padding: 5px 15px 10px 15px;
+            background-color: #fafafa;
+        }
+
+        .sub-category-link {
+            display: block;
+            padding: 8px 10px;
+            color: #555 !important;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .sub-category-link:hover {
+            background-color: #eee;
+            color: var(--brand-secondary) !important;
+        }
+
+        /* البانر والمنتجات */
+        .hero-banner {
+            background: linear-gradient(135deg, #11161d 0%, #1d2531 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 25px 20px;
+            border: 1px solid rgba(243, 168, 71, 0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #e2e2e2;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+        }
+
+        .img-box {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background: #fff;
+            border-radius: 6px;
+        }
+
+        .img-box img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .btn-whatsapp-order {
+            background-color: #25d366;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 6px;
+            border: none;
+            padding: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-whatsapp-order:hover {
+            background-color: #1eb954;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--brand-primary);
+            border-radius: 2px;
+        }
+
+        /* الفوتر وأزرار التواصل */
+        footer {
+            background-color: var(--dark-header);
+            color: white;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white !important;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .contact-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp { background-color: #25d366; }
+        .btn-telegram { background-color: #0088cc; }
+        .btn-facebook { background-color: #1877f2; }
+        .btn-phone { background-color: var(--brand-primary); color: #11161d !important; }
+
+        /* شريط تواصل ثابت في أسفل الشاشة للموبايل */
+        .sticky-contact-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #11161d;
+            z-index: 1030;
+            border-top: 1px solid #333;
+            padding: 8px 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header الرئيسي -->
+    <header class="main-header py-3 text-white">
+        <div class="container text-center">
+            <a href="index.html" class="brand-logo-container">
+                <!-- يمكنك تغيير اسم ملف الصورة هنا ليطابق مسار الصورة لديك مثل logo.jpg -->
+                <img src="1000285337.jpg" alt="امزون ذي قار" class="brand-logo-img" onerror="this.style.display='none'">
+                <span class="brand-logo-text">امزون <span>ذي قار</span></span>
+            </a>
+        </div>
+    </header>
+
+    <!-- شريط المنيو العلوي -->
+    <div class="sub-header py-2 text-white">
+        <div class="container d-flex justify-content-between align-items-center">
+            <button class="btn btn-categories-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+                <i class="fas fa-bars me-2"></i> جميع الأقسام والمنتجات
+            </button>
+
+            <a href="category.html?type=all" class="text-white text-decoration-none fw-bold small">
+                <i class="fas fa-th-large text-warning me-1"></i> كل المنتجات
+            </a>
+        </div>
+    </div>
+
+    <!-- المنيو الجانبي الشامل -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title fw-bold" id="sidebarMenuLabel"><i class="fas fa-list text-warning me-2"></i>أقسام المتجر الشاملة</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="إغلاق"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            
+            <div class="accordion accordion-flush sidebar-accordion" id="categoryAccordion">
+
+                <!-- 1. الحاسبات وقطع الكمبيوتر -->
+                <div class="accordion-item border-bottom">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-pc">
+                            <i class="fas fa-desktop text-warning me-2"></i> الحاسبات وقطع التجميع
+                        </button>
+                    </h2>
+                    <div id="acc-pc" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                        <div class="accordion-body">
+                            <a href="category.html?type=mini-pc" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> أجهزة المني بيسي (Mini PC)</a>
+                            <a href="category.html?type=cpus" class="sub-category-link"><i class="fas fa-microchip me-2"></i> المعالجات (CPUs)</a>
+                            <a href="category.html?type=gpus" class="sub-category-link"><i class="fas fa-memory me-2"></i> كروت الشاشة (GPUs)</a>
+                            <a href="category.html?type=motherboards" class="sub-category-link"><i class="fas fa-chess-board me-2"></i> المذربوردات (Motherboards)</a>
+                            <a href="category.html?type=ram-ssd" class="sub-category-link"><i class="fas fa-hdd me-2"></i> الرامات والتخزين (RAM & SSD)</a>
+                            <a href="category.html?type=cooling-power" class="sub-category-link"><i class="fas fa-fan me-2"></i> التبريد ومزودات الطاقة (PSU)</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. الشاشات وملحقات العرض -->
+                <div class="accordion-item border-bottom">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-monitors">
+                            <i class="fas fa-tv text-warning me-2"></i> الشاشات وأجهزة العرض
+                        </button>
+                    </h2>
+                    <div id="acc-monitors" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                        <div class="accordion-body">
+                            <a href="category.html?type=curved-monitors" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> شاشات القيمنق المنحنية (OLED/Ultrawide)</a>
+                            <a href="category.html?type=portable-monitors" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> الشاشات المحمولة (Portable Display)</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. ألعاب الكونسول وأجهزة ألعاب الرجعية -->
+                <div class="accordion-item border-bottom">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-gaming">
+                            <i class="fas fa-gamepad text-warning me-2"></i> الكونسول واليديات والألعاب
+                        </button>
+                    </h2>
+                    <div id="acc-gaming" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                        <div class="accordion-body">
+                            <a href="category.html?type=retro-consoles" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> أجهزة المحاكاة والألعاب القديمة (Retro)</a>
+                            <a href="category.html?type=controllers" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> يديات التحكم المغناطيسية (Hall Effect)</a>
+                            <a href="category.html?type=keyboards-mice" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> كيبوردات الجيمنج والماوسات</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. الراوترات ومعدات الشبكات -->
+                <div class="accordion-item border-bottom">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-routers">
+                            <i class="fas fa-wifi text-warning me-2"></i> الراوترات وأنظمة الشبكات
+                        </button>
+                    </h2>
+                    <div id="acc-routers" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                        <div class="accordion-body">
+                            <a href="category.html?type=openwrt-routers" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> راوترات OpenWrt وتوزيع الحمل</a>
+                            <a href="category.html?type=wifi6-5g" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> راوترات Wi-Fi 6/7 وأجهزة 5G CPE</a>
+                            <a href="category.html?type=switches-net" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> السويتشات والمقويات والكبسولات</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. أنظمة الطاقة والبطاريات وBMS -->
+                <div class="accordion-item border-bottom">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-power">
+                            <i class="fas fa-car-battery text-warning me-2"></i> الطاقة والبطاريات وUPS
+                        </button>
+                    </h2>
+                    <div id="acc-power" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                        <div class="accordion-body">
+                            <a href="category.html?type=bms" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> لوحات إدارة البطاريات (BMS)</a>
+                            <a href="category.html?type=lithium" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> خلايا بطاريات الليثيوم</a>
+                            <a href="category.html?type=ups-inverters" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> أجهزة UPS والمحولات الكهربائية</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. الخرائط الإلكترونية والمتحكمات -->
+                <div class="accordion-item border-bottom">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-electronics">
+                            <i class="fas fa-microchip text-warning me-2"></i> الخرائط والإلكترونيات
+                        </button>
+                    </h2>
+                    <div id="acc-electronics" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                        <div class="accordion-body">
+                            <a href="category.html?type=raspberry-pi" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> أجهزة الميكروكنترولر وRaspberry Pi</a>
+                            <a href="category.html?type=electronic-boards" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> الخرائط الإلكترونية وقطع الصيانة</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- أقسام مباشرة إضافية -->
+            <ul class="list-group category-menu-list rounded-0">
+                <li class="list-group-item">
+                    <a href="category.html?type=watches"><span><i class="fas fa-clock text-warning me-2"></i> الساعات والإكسسوارات</span> <i class="fas fa-chevron-left text-muted small"></i></a>
+                </li>
+                <li class="list-group-item">
+                    <a href="category.html?type=kids"><span><i class="fas fa-shapes text-warning me-2"></i> ألعاب ومستلزمات الأطفال</span> <i class="fas fa-chevron-left text-muted small"></i></a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <!-- محتوى الصفحة الرئيسية -->
+    <div class="container my-4">
+        
+        <!-- البانر الترحيبي -->
+        <div class="hero-banner mb-4 text-center">
+            <h2 class="fw-bold text-warning mb-2">أهلاً بك في متجر امزون ذي قار</h2>
+            <p class="mb-0 fs-6">اضغط على "جميع الأقسام والمنتجات" لتصفح كافة الأجهزة والتجميعات بسهولة.</p>
+        </div>
+
+        <!-- المعروضات المميزة -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="section-title m-0">منتجات مميزة</h4>
+            <a href="category.html?type=all" class="btn btn-outline-dark btn-sm">عرض الكل <i class="fas fa-arrow-left ms-1"></i></a>
+        </div>
+
+        <div class="row g-3">
+
+            <!-- منتج 1: معالج -->
+            <div class="col-6 col-md-3">
+                <div class="product-card p-2 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="img-box"><img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=300" alt="CPU"></div>
+                        <h6 class="fw-bold fs-6 mb-1 mt-2 text-truncate">معالج AMD Ryzen 9 9950X3D</h6>
+                        <p class="text-muted small mb-2">أعلى أداء للألعاب والتصميم</p>
+                    </div>
+                    <a href="https://wa.me/9647822980189?text=طلب%20معالج%20Ryzen%209" target="_blank" class="btn btn-whatsapp-order text-center text-decoration-none"><i class="fab fa-whatsapp me-1"></i> طلب عبر واتساب</a>
+                </div>
+            </div>
+
+            <!-- منتج 2: كرت شاشة -->
+            <div class="col-6 col-md-3">
+                <div class="product-card p-2 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="img-box"><img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300" alt="GPU"></div>
+                        <h6 class="fw-bold fs-6 mb-1 mt-2 text-truncate">كرت شاشة RTX 5080</h6>
+                        <p class="text-muted small mb-2">أداء خارق وتتبع أشعة</p>
+                    </div>
+                    <a href="https://wa.me/9647822980189?text=طلب%20كرت%20شاشة%20RTX%205080" target="_blank" class="btn btn-whatsapp-order text-center text-decoration-none"><i class="fab fa-whatsapp me-1"></i> طلب عبر واتساب</a>
+                </div>
+            </div>
+
+            <!-- منتج 3: مني بيسي -->
+            <div class="col-6 col-md-3">
+                <div class="product-card p-2 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="img-box"><img src="https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=300" alt="Mini PC"></div>
+                        <h6 class="fw-bold fs-6 mb-1 mt-2 text-truncate">GMKtec NucBox K12</h6>
+                        <p class="text-muted small mb-2">مني بيسي بمواصفات عالية</p>
+                    </div>
+                    <a href="https://wa.me/9647822980189?text=طلب%20مني%20بيسي%20K12" target="_blank" class="btn btn-whatsapp-order text-center text-decoration-none"><i class="fab fa-whatsapp me-1"></i> طلب عبر واتساب</a>
+                </div>
+            </div>
+
+            <!-- منتج 4: راوتر -->
+            <div class="col-6 col-md-3">
+                <div class="product-card p-2 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="img-box"><img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=300" alt="Router"></div>
+                        <h6 class="fw-bold fs-6 mb-1 mt-2 text-truncate">راوتر Wi-Fi 6 احترافي</h6>
+                        <p class="text-muted small mb-2">تغطية واسعة وسرعة عالية</p>
+                    </div>
+                    <a href="https://wa.me/9647822980189?text=طلب%20راوتر%20WiFi6" target="_blank" class="btn btn-whatsapp-order text-center text-decoration-none"><i class="fab fa-whatsapp me-1"></i> طلب عبر واتساب</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- قسم الفوتر المباشر وأزرار التواصل -->
+    <footer class="pt-4 pb-5 border-top border-secondary">
+        <div class="container text-center">
+            <h5 class="fw-bold text-warning mb-3"><i class="fas fa-headset me-2"></i>تواصل معنا للطلب والاستفسار</h5>
+            <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+                <a href="https://wa.me/9647822980189" target="_blank" class="contact-btn btn-whatsapp">
+                    <i class="fab fa-whatsapp fs-5"></i> واتساب
+                </a>
+                <a href="https://t.me/ss_iraq1" target="_blank" class="contact-btn btn-telegram">
+                    <i class="fab fa-telegram-plane fs-5"></i> تليجرام
+                </a>
+                <a href="https://www.facebook.com/share/1FC5hwZSbt/" target="_blank" class="contact-btn btn-facebook">
+                    <i class="fab fa-facebook-f fs-5"></i> فيسبوك
+                </a>
+                <a href="tel:07822980189" class="contact-btn btn-phone">
+                    <i class="fas fa-phone-alt fs-5"></i> اتصل بنا
+                </a>
+            </div>
+            <p class="text-muted small mb-0">جميع الحقوق محفوظة &copy; امزون ذي قار</p>
+        </div>
+    </footer>
+
+    <!-- شريط تواصل ثابت للموبايل -->
+    <div class="sticky-contact-bar d-md-none d-flex justify-content-around align-items-center">
+        <a href="https://wa.me/9647822980189" target="_blank" class="text-white text-decoration-none text-center">
+            <i class="fab fa-whatsapp text-success fs-5 d-block"></i>
+            <span style="font-size: 0.75rem;">واتساب</span>
+        </a>
+        <a href="https://t.me/ss_iraq1" target="_blank" class="text-white text-decoration-none text-center">
+            <i class="fab fa-telegram-plane text-info fs-5 d-block"></i>
+            <span style="font-size: 0.75rem;">تليجرام</span>
+        </a>
+        <a href="https://www.facebook.com/share/1FC5hwZSbt/" target="_blank" class="text-white text-decoration-none text-center">
+            <i class="fab fa-facebook-f text-primary fs-5 d-block"></i>
+            <span style="font-size: 0.75rem;">فيسبوك</span>
+        </a>
+        <a href="tel:07822980189" class="text-white text-decoration-none text-center">
+            <i class="fas fa-phone-alt text-warning fs-5 d-block"></i>
+            <span style="font-size: 0.75rem;">اتصال</span>
+        </a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
