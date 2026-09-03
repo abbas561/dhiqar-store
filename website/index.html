@@ -121,8 +121,8 @@
     <!-- Main Section -->
     <main class="container my-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="h4 m-0 section-title">أحدث المنتجات</h2>
-            <a href="/website/index.html" class="btn btn-sm btn-outline-dark">إعادة تحديث</a>
+            <h2 class="h4 m-0 section-title" id="section-heading">جميع المنتجات</h2>
+            <a href="/website/index.html" class="btn btn-sm btn-outline-dark">عرض الكل</a>
         </div>
         
         <div class="row g-3" id="products-container">
@@ -133,7 +133,7 @@
         </div>
     </main>
 
-    <!-- Sidebar Menu -->
+    <!-- Sidebar Menu with Complete Categories -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="categoriesSidebar">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title"><i class="fa-solid fa-list me-2"></i>أقسام المتجر</h5>
@@ -142,6 +142,7 @@
         <div class="offcanvas-body p-0">
             <div class="accordion accordion-flush" id="categoriesAccordion">
                 
+                <!-- 1. الكونسول واليديات والألعاب -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat1">
@@ -152,10 +153,12 @@
                         <div class="accordion-body p-0">
                             <a href="/website/index.html?filter=يديات" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">يديات التحكم</a>
                             <a href="/website/index.html?filter=كونسول" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">أجهزة الكونسول</a>
+                            <a href="/website/index.html?filter=العاب" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">الألعاب أقراص وحسابات</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- 2. الحاسبات والتجميعات -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat2">
@@ -165,11 +168,13 @@
                     <div id="cat2" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
                             <a href="/website/index.html?filter=تجميع" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">تجميعات الكمبيوتر</a>
+                            <a href="/website/index.html?filter=لاب توب" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">حاسبات محمول (لابتوب)</a>
                             <a href="/website/index.html?filter=شاش" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">شاشات العرض</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- 3. الراوترات والشبكات -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat3">
@@ -179,6 +184,38 @@
                     <div id="cat3" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
                             <a href="/website/index.html?filter=راوتر" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">راوترات Wi-Fi</a>
+                            <a href="/website/index.html?filter=شبكات" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">معدات ومقويات الشبكة</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. الأجهزة الذكية والملحقات -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat4">
+                            <i class="fa-solid fa-mobile-screen-button me-2 text-warning"></i> الأجهزة الذكية والملحقات
+                        </button>
+                    </h2>
+                    <div id="cat4" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
+                        <div class="accordion-body p-0">
+                            <a href="/website/index.html?filter=سماعات" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">سماعات وHeadsets</a>
+                            <a href="/website/index.html?filter=ماوس" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">ماوس وكيبوردات</a>
+                            <a href="/website/index.html?filter=اكسسوار" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">إكسسوارات متنوعة</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. قطع الصيانة والتحديثات -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat5">
+                            <i class="fa-solid fa-microchip me-2 text-warning"></i> قطع التحديث والصيانة
+                        </button>
+                    </h2>
+                    <div id="cat5" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
+                        <div class="accordion-body p-0">
+                            <a href="/website/index.html?filter=تخزين" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">وحدات تخزين SSD & RAM</a>
+                            <a href="/website/index.html?filter=باور" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">باور سبلاي ومراوح تبريد</a>
                         </div>
                     </div>
                 </div>
@@ -197,6 +234,10 @@
             const container = document.getElementById('products-container');
             const urlParams = new URLSearchParams(window.location.search);
             const filterKey = urlParams.get('filter');
+
+            if(filterKey) {
+                document.getElementById('section-heading').innerText = `القسم: ${filterKey}`;
+            }
 
             try {
                 const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/products`);
@@ -226,7 +267,7 @@
                 }
 
                 if(count === 0) {
-                    container.innerHTML = '<p class="text-center text-muted py-5">لا توجد منتجات مطابقة لهذا القسم.</p>';
+                    container.innerHTML = '<p class="text-center text-muted py-5">لا توجد منتجات متوفرة في هذا القسم حالياً.</p>';
                 }
 
             } catch(e) {
