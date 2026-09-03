@@ -33,6 +33,6 @@ description: >-
 price: 65000
 quantity: 1
 out_of_stock: false
-category: الحاسبات وقطع التجميع
+category: الكونسول واليديات والألعاب
 subcategory: يديات التحكم المغناطيسية (Hall Effect)
 ---
