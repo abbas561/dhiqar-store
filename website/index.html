@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>امزون ذي قار</title>
+    
+    <!-- External Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
     <style>
         :root {
             --brand-primary: #f3a847;
-            --brand-secondary: #e47911;
             --dark-header: #11161d;
-            --sub-header: #1d2531;
             --bg-light: #f4f5f7;
         }
 
@@ -106,9 +108,10 @@
 </head>
 <body>
 
+    <!-- Header Section -->
     <header class="main-header text-white py-3">
         <div class="container d-flex justify-content-between align-items-center">
-            <h1 class="h3 m-0 text-warning font-weight-bold">
+            <h1 class="h3 m-0 font-weight-bold">
                 <a href="/website/index.html" class="text-warning text-decoration-none">امزون ذي قار</a>
             </h1>
             <button class="btn btn-categories-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#categoriesSidebar">
@@ -117,6 +120,7 @@
         </div>
     </header>
 
+    <!-- Main Content Area -->
     <main class="container my-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="h4 m-0 section-title" id="page-title">جميع المنتجات</h2>
@@ -131,6 +135,7 @@
         </div>
     </main>
 
+    <!-- Categories Sidebar -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="categoriesSidebar">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title"><i class="fa-solid fa-list me-2"></i>أقسام المتجر</h5>
@@ -139,6 +144,7 @@
         <div class="offcanvas-body p-0">
             <div class="accordion accordion-flush" id="categoriesAccordion">
                 
+                <!-- Category 1 -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat1">
@@ -153,6 +159,7 @@
                     </div>
                 </div>
 
+                <!-- Category 2 -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat2">
@@ -167,6 +174,7 @@
                     </div>
                 </div>
 
+                <!-- Category 3 -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat3">
@@ -184,106 +192,39 @@
         </div>
     </div>
 
+    <!-- Application JavaScript Logic -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const REPO_OWNER = 'abbas561';
         const REPO_NAME = 'dhiqar-store';
         const BRANCH = 'main';
 
-        async function fetchGitHubJSON(path) {
+        // 1. Helper to fetch single JSON file safely
+        async function fetchJSON(path) {
             try {
                 const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${path}`);
-                if (!res.ok) return null;
-                return await res.json();
+                return res.ok ? await res.json() : null;
             } catch (e) {
                 return null;
             }
         }
 
-        async function loadProducts() {
-            document.getElementById('page-title').innerText = "جميع المنتجات";
-            const container = document.getElementById('products-container');
-            container.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-warning"></div><p class="mt-2 text-muted">جاري تحميل المنتجات...</p></div>`;
-
+        // 2. Fetch list of all product files
+        async function getProductFiles() {
             try {
                 const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/products`);
-                if(!res.ok) {
-                    container.innerHTML = '<p class="text-center text-muted">لا توجد منتجات حالياً.</p>';
-                    return;
-                }
+                if (!res.ok) return [];
                 const files = await res.json();
-                container.innerHTML = '';
-
-                let count = 0;
-                for(let file of files) {
-                    if(file.name.endsWith('.json')) {
-                        try {
-                            const product = await fetchGitHubJSON(`content/products/${file.name}`);
-                            if(product) {
-                                renderCard(product, container);
-                                count++;
-                            }
-                        } catch(err) {
-                            console.error(err);
-                        }
-                    }
-                }
-                if(count === 0) {
-                    container.innerHTML = '<p class="text-center text-muted">لا توجد منتجات مضافة بعد.</p>';
-                }
-            } catch(e) {
-                container.innerHTML = '<p class="text-center text-danger">حدث خطأ في جلب البيانات.</p>';
+                return files.filter(f => f.name.endsWith('.json'));
+            } catch (e) {
+                return [];
             }
         }
 
-        async function filterByCategory(categoryName) {
-            const closeBtn = document.getElementById('closeSidebarBtn');
-            if (closeBtn) closeBtn.click();
-            
-            document.getElementById('page-title').innerText = categoryName;
-            const container = document.getElementById('products-container');
-            container.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-warning"></div><p class="mt-2 text-muted">جاري التصفية...</p></div>`;
-
-            try {
-                const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/products`);
-                if(!res.ok) {
-                    container.innerHTML = '<p class="text-center text-muted">تعذر الاتصال بـ GitHub</p>';
-                    return;
-                }
-                const files = await res.json();
-                container.innerHTML = '';
-                let count = 0;
-
-                for(let file of files) {
-                    if(file.name.endsWith('.json')) {
-                        try {
-                            const product = await fetchGitHubJSON(`content/products/${file.name}`);
-                            if(product) {
-                                // المقارنة المرنة مع اسم القسم
-                                const pCat = (product.category || '').trim().toLowerCase();
-                                const targetCat = (categoryName || '').trim().toLowerCase();
-                                
-                                if(!categoryName || pCat.includes(targetCat) || targetCat.includes(pCat)) {
-                                    renderCard(product, container);
-                                    count++;
-                                }
-                            }
-                        } catch(err) {
-                            console.error(err);
-                        }
-                    }
-                }
-                if(count === 0) {
-                    container.innerHTML = `<p class="text-center text-muted my-5">لا توجد منتجات متوفرة حالياً في هذا القسم.</p>`;
-                }
-            } catch(e) {
-                container.innerHTML = '<p class="text-center text-danger">حدث خطأ أثناء التصفية.</p>';
-            }
-        }
-
-        function renderCard(product, container) {
+        // 3. Render Single Product Card
+        function createProductCard(product) {
             let imgUrl = product.image || 'https://via.placeholder.com/200';
-            if(imgUrl.startsWith('/')) {
+            if (imgUrl.startsWith('/')) {
                 imgUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}${imgUrl}`;
             }
 
@@ -301,9 +242,63 @@
                     </a>
                 </div>
             `;
-            container.appendChild(col);
+            return col;
         }
 
+        // 4. Main Load Function
+        async function loadProducts() {
+            document.getElementById('page-title').innerText = "جميع المنتجات";
+            const container = document.getElementById('products-container');
+            container.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-warning"></div><p class="mt-2 text-muted">جاري تحميل المنتجات...</p></div>`;
+
+            const files = await getProductFiles();
+            container.innerHTML = '';
+
+            if (files.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted py-5">لا توجد منتجات متوفرة حالياً.</p>';
+                return;
+            }
+
+            for (const file of files) {
+                const product = await fetchJSON(`content/products/${file.name}`);
+                if (product) {
+                    container.appendChild(createProductCard(product));
+                }
+            }
+        }
+
+        // 5. Filter Category Function
+        async function filterByCategory(categoryName) {
+            const closeBtn = document.getElementById('closeSidebarBtn');
+            if (closeBtn) closeBtn.click();
+
+            document.getElementById('page-title').innerText = categoryName;
+            const container = document.getElementById('products-container');
+            container.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-warning"></div><p class="mt-2 text-muted">جاري التصفية...</p></div>`;
+
+            const files = await getProductFiles();
+            container.innerHTML = '';
+            let count = 0;
+
+            for (const file of files) {
+                const product = await fetchJSON(`content/products/${file.name}`);
+                if (product) {
+                    const pCat = (product.category || '').trim().toLowerCase();
+                    const targetCat = (categoryName || '').trim().toLowerCase();
+
+                    if (!categoryName || pCat.includes(targetCat) || targetCat.includes(pCat)) {
+                        container.appendChild(createProductCard(product));
+                        count++;
+                    }
+                }
+            }
+
+            if (count === 0) {
+                container.innerHTML = `<p class="text-center text-muted py-5">لا توجد منتجات متوفرة في قسم "${categoryName}".</p>`;
+            }
+        }
+
+        // Initialize App
         document.addEventListener('DOMContentLoaded', loadProducts);
     </script>
 </body>
