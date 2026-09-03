@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>امزون ذي قار</title>
     
-    <!-- External Libraries -->
+    <!-- Bootstrap RTL & FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Custom Styles -->
     <style>
         :root {
             --brand-primary: #f3a847;
@@ -153,8 +152,8 @@
                     </h2>
                     <div id="cat1" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('يديات التحكم')">يديات التحكم</a>
-                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('أجهزة الكونسول')">أجهزة الكونسول</a>
+                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('يديات', 'يديات التحكم')">يديات التحكم</a>
+                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('كونسول', 'أجهزة الكونسول')">أجهزة الكونسول</a>
                         </div>
                     </div>
                 </div>
@@ -168,8 +167,8 @@
                     </h2>
                     <div id="cat2" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('تجميعات الكمبيوتر')">تجميعات الكمبيوتر</a>
-                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('شاشات العرض')">شاشات العرض</a>
+                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('تجميع', 'تجميعات الكمبيوتر')">تجميعات الكمبيوتر</a>
+                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('شاش', 'شاشات العرض')">شاشات العرض</a>
                         </div>
                     </div>
                 </div>
@@ -183,7 +182,7 @@
                     </h2>
                     <div id="cat3" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('راوترات Wi-Fi')">راوترات Wi-Fi</a>
+                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('راوتر', 'راوترات Wi-Fi')">راوترات Wi-Fi</a>
                         </div>
                     </div>
                 </div>
@@ -199,20 +198,20 @@
         const REPO_NAME = 'dhiqar-store';
         const BRANCH = 'main';
 
-        // 1. Helper to fetch single JSON file safely
+        // 1. Safe Fetch for JSON Content
         async function fetchJSON(path) {
             try {
-                const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${path}`);
+                const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${path}?t=${Date.now()}`);
                 return res.ok ? await res.json() : null;
             } catch (e) {
                 return null;
             }
         }
 
-        // 2. Fetch list of all product files
+        // 2. Fetch All Products File List
         async function getProductFiles() {
             try {
-                const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/products`);
+                const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/products?t=${Date.now()}`);
                 if (!res.ok) return [];
                 const files = await res.json();
                 return files.filter(f => f.name.endsWith('.json'));
@@ -221,7 +220,7 @@
             }
         }
 
-        // 3. Render Single Product Card
+        // 3. Render Card Element
         function createProductCard(product) {
             let imgUrl = product.image || 'https://via.placeholder.com/200';
             if (imgUrl.startsWith('/')) {
@@ -245,7 +244,7 @@
             return col;
         }
 
-        // 4. Main Load Function
+        // 4. Load All Products
         async function loadProducts() {
             document.getElementById('page-title').innerText = "جميع المنتجات";
             const container = document.getElementById('products-container');
@@ -267,14 +266,14 @@
             }
         }
 
-        // 5. Filter Category Function
-        async function filterByCategory(categoryName) {
+        // 5. Smart Flexible Filtering
+        async function filterByCategory(keyword, displayTitle) {
             const closeBtn = document.getElementById('closeSidebarBtn');
             if (closeBtn) closeBtn.click();
 
-            document.getElementById('page-title').innerText = categoryName;
+            document.getElementById('page-title').innerText = displayTitle || keyword;
             const container = document.getElementById('products-container');
-            container.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-warning"></div><p class="mt-2 text-muted">جاري التصفية...</p></div>`;
+            container.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-warning"></div><p class="mt-2 text-muted">جاري البحث في القسم...</p></div>`;
 
             const files = await getProductFiles();
             container.innerHTML = '';
@@ -283,10 +282,12 @@
             for (const file of files) {
                 const product = await fetchJSON(`content/products/${file.name}`);
                 if (product) {
-                    const pCat = (product.category || '').trim().toLowerCase();
-                    const targetCat = (categoryName || '').trim().toLowerCase();
+                    const pCategory = (product.category || '').toLowerCase();
+                    const pTitle = (product.title || '').toLowerCase();
+                    const searchKey = keyword.toLowerCase();
 
-                    if (!categoryName || pCat.includes(targetCat) || targetCat.includes(pCat)) {
+                    // مطابقة مرنة على القسم أو العنوان
+                    if (pCategory.includes(searchKey) || pTitle.includes(searchKey)) {
                         container.appendChild(createProductCard(product));
                         count++;
                     }
@@ -294,11 +295,11 @@
             }
 
             if (count === 0) {
-                container.innerHTML = `<p class="text-center text-muted py-5">لا توجد منتجات متوفرة في قسم "${categoryName}".</p>`;
+                container.innerHTML = `<p class="text-center text-muted py-5">لا توجد منتجات متوفرة في قسم "${displayTitle || keyword}".</p>`;
             }
         }
 
-        // Initialize App
+        // Run On Load
         document.addEventListener('DOMContentLoaded', loadProducts);
     </script>
 </body>
