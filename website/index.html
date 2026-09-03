@@ -102,6 +102,11 @@
             height: 3px;
             background-color: var(--brand-primary);
         }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #fef5e7;
+            color: #11161d;
+        }
     </style>
 </head>
 <body>
@@ -151,9 +156,10 @@
                     </h2>
                     <div id="cat1" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="/website/index.html?filter=يديات" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">يديات التحكم</a>
-                            <a href="/website/index.html?filter=كونسول" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">أجهزة الكونسول</a>
-                            <a href="/website/index.html?filter=العاب" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">الألعاب</a>
+                            <a href="/website/index.html?filter=يد" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">يديات التحكم والماكرو</a>
+                            <a href="/website/index.html?filter=كونسول" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">أجهزة الكونسول (بلايستيشن/إكس بوكس)</a>
+                            <a href="/website/index.html?filter=مترو" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">أجهزة المحمول والريترو (Handheld)</a>
+                            <a href="/website/index.html?filter=العاب" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">أقراص وحسابات الألعاب</a>
                         </div>
                     </div>
                 </div>
@@ -167,9 +173,10 @@
                     </h2>
                     <div id="cat2" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="/website/index.html?filter=تجميع" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">تجميعات الكمبيوتر</a>
+                            <a href="/website/index.html?filter=تجميع" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">تجميعات القيمنق والعمل</a>
+                            <a href="/website/index.html?filter=ميني" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">Mini PC وأجهزة المكاتب</a>
                             <a href="/website/index.html?filter=لاب" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">حاسبات محمول (لابتوب)</a>
-                            <a href="/website/index.html?filter=شاش" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">شاشات العرض</a>
+                            <a href="/website/index.html?filter=شاش" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">شاشات العرض والـ OLED</a>
                         </div>
                     </div>
                 </div>
@@ -183,8 +190,9 @@
                     </h2>
                     <div id="cat3" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="/website/index.html?filter=راوتر" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">راوترات Wi-Fi</a>
-                            <a href="/website/index.html?filter=شبك" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">معدات ومقويات الشبكة</a>
+                            <a href="/website/index.html?filter=راوتر" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">راوترات Wi-Fi 6 / 7</a>
+                            <a href="/website/index.html?filter=5g" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">راوترات 5G وModems</a>
+                            <a href="/website/index.html?filter=شبك" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">مقويات الشبكة والـ Switches</a>
                         </div>
                     </div>
                 </div>
@@ -198,14 +206,14 @@
                     </h2>
                     <div id="cat4" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="/website/index.html?filter=سماع" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">سماعات وHeadsets</a>
-                            <a href="/website/index.html?filter=ماوس" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">ماوس وكيبوردات</a>
-                            <a href="/website/index.html?filter=اكسسوار" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">إكسسوارات متنوعة</a>
+                            <a href="/website/index.html?filter=سماع" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">سماعات رأس وسماعات أذن</a>
+                            <a href="/website/index.html?filter=ماوس" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">ماوسات وكيبوردات ميكانيكية</a>
+                            <a href="/website/index.html?filter=اكسسوار" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">إكسسوارات وكابلات توصيل</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 5. قطع الصيانة والتحديثات -->
+                <!-- 5. قطع التحديث والصيانة -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat5">
@@ -214,8 +222,25 @@
                     </h2>
                     <div id="cat5" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="/website/index.html?filter=تخزين" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">وحدات تخزين SSD & RAM</a>
-                            <a href="/website/index.html?filter=باور" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">باور سبلاي ومراوح تبريد</a>
+                            <a href="/website/index.html?filter=تخزين" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">وحدات تخزين SSD / NVMe & RAM</a>
+                            <a href="/website/index.html?filter=كارت" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">كروت الشاشة والمعالجات</a>
+                            <a href="/website/index.html?filter=باور" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">باور سبلاي وأنظمة التبريد</a>
+                            <a href="/website/index.html?filter=قطع" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">قطع إلكترونية ومعدات صيانة</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. البطاقات الشحن والاشتراكات -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat6">
+                            <i class="fa-solid fa-credit-card me-2 text-warning"></i> كروت الشحن والاشتراكات
+                        </button>
+                    </h2>
+                    <div id="cat6" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
+                        <div class="accordion-body p-0">
+                            <a href="/website/index.html?filter=كرت" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">بطاقات شحن بلايستيشن وإكس بوكس</a>
+                            <a href="/website/index.html?filter=اشتراك" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">اشتراكات السيرفرات والبرامج</a>
                         </div>
                     </div>
                 </div>
@@ -236,11 +261,10 @@
             const filterKey = urlParams.get('filter');
 
             if (filterKey) {
-                document.getElementById('section-heading').innerText = `القسم: ${filterKey}`;
+                document.getElementById('section-heading').innerText = `تصفية حسب: ${filterKey}`;
             }
 
             try {
-                // جلب قائمة الملفات
                 const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/products`);
                 
                 if (!res.ok) {
@@ -257,7 +281,6 @@
 
                 const jsonFiles = files.filter(f => f.name.endsWith('.json'));
 
-                // جلب المنتجات بالتوازي لسرعة الأداء
                 const productPromises = jsonFiles.map(file => 
                     fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/content/products/${file.name}`)
                         .then(r => r.ok ? r.json() : null)
@@ -272,15 +295,16 @@
                 for (const product of products) {
                     const catStr = (product.category || '').toLowerCase();
                     const titleStr = (product.title || '').toLowerCase();
+                    const descStr = (product.description || '').toLowerCase();
 
-                    if (!filterKey || catStr.includes(filterKey.toLowerCase()) || titleStr.includes(filterKey.toLowerCase())) {
+                    if (!filterKey || catStr.includes(filterKey.toLowerCase()) || titleStr.includes(filterKey.toLowerCase()) || descStr.includes(filterKey.toLowerCase())) {
                         renderCard(product, container);
                         count++;
                     }
                 }
 
                 if (count === 0) {
-                    container.innerHTML = '<p class="text-center text-muted py-5">لا توجد منتجات مطابقة لهذا القسم.</p>';
+                    container.innerHTML = '<p class="text-center text-muted py-5">لا توجد منتجات متوفرة في هذا القسم حالياً.</p>';
                 }
 
             } catch (e) {
