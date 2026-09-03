@@ -106,6 +106,195 @@
 </head>
 <body>
 
+    <header class="main-header text-white py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="h3 m-0 text-warning font-weight-bold">
+                <a href="/website/index.html" class="text-warning text-decoration-none">امزون ذي قار</a>
+            </h1>
+            <button class="btn btn-categories-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#categoriesSidebar">
+                <i class="fa-solid fa-bars me-1"></i> جميع الأقسام
+            </button>
+        </div>
+    </header>
+
+    <main class="container my-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="h4 m-0 section-title" id="page-title">جميع المنتجات</h2>
+            <button class="btn btn-sm btn-outline-dark" onclick="loadAllProducts()">عرض الكل</button>
+        </div>
+        
+        <div class="row g-3" id="products-container">
+            <div class="text-center py-5">
+                <div class="spinner-border text-warning" role="status"></div>
+                <p class="mt-2 text-muted">جاري تحميل المنتجات...</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="categoriesSidebar">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"><i class="fa-solid fa-list me-2"></i>الأقسام</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action fw-bold" onclick="loadAllProducts()">جميع المنتجات</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const REPO_OWNER = 'abbas561';
+        const REPO_NAME = 'dhiqar-store';
+        const BRANCH = 'main';
+
+        async function fetchGitHubJSON(path) {
+            try {
+                const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${path}`);
+                if (!res.ok) return null;
+                return await res.json();
+            } catch (e) {
+                return null;
+            }
+        }
+
+        async function loadAllProducts() {
+            document.getElementById('page-title').innerText = "جميع المنتجات";
+            const container = document.getElementById('products-container');
+            container.innerHTML = `
+                <div class="text-center py-5">
+                    <div class="spinner-border text-warning" role="status"></div>
+                    <p class="mt-2 text-muted">جاري جلب المنتجات...</p>
+                </div>`;
+
+            try {
+                const apiRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/products`);
+                if (!apiRes.ok) {
+                    container.innerHTML = '<p class="text-center text-muted">لا توجد منتجات حالياً.</p>';
+                    return;
+                }
+                const files = await apiRes.json();
+                container.innerHTML = '';
+
+                let count = 0;
+                for (let file of files) {
+                    if (file.name.endsWith('.json')) {
+                        const product = await fetchGitHubJSON(`content/products/${file.name}`);
+                        if (product) {
+                            renderProductCard(product, container);
+                            count++;
+                        }
+                    }
+                }
+                if (count === 0) {
+                    container.innerHTML = '<p class="text-center text-muted">لا توجد منتجات مضافة بعد.</p>';
+                }
+            } catch (e) {
+                container.innerHTML = '<p class="text-center text-danger">حدث خطأ أثناء تحميل البيانات.</p>';
+            }
+        }
+
+        function renderProductCard(product, container) {
+            let imgUrl = product.image || 'https://via.placeholder.com/300x300?text=بدون+صورة';
+            if (imgUrl.startsWith('/')) {
+                imgUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}${imgUrl}`;
+            }
+
+            const card = document.createElement('div');
+            card.className = 'col-6 col-md-4 col-lg-3';
+            card.innerHTML = `
+                <div class="product-card p-3">
+                    <div class="img-box">
+                        <img src="${imgUrl}" alt="${product.title || 'منتج'}" loading="lazy">
+                    </div>
+                    <h6 class="text-truncate mt-2 mb-1" title="${product.title}">${product.title || 'بدون عنوان'}</h6>
+                    <p class="text-warning fw-bold mb-2">$${product.price || 0}</p>
+                    <a href="https://wa.me/?text=${encodeURIComponent('أريد طلب: ' + product.title)}" target="_blank" class="btn-whatsapp-order">
+                        <i class="fa-brands fa-whatsapp me-1"></i> طلب عبر واتساب
+                    </a>
+                </div>
+            `;
+            container.appendChild(card);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAllProducts();
+        });
+    </script>
+</body>
+</html>
+        .offcanvas-header {
+            background-color: var(--dark-header);
+            color: #fff;
+            border-bottom: 2px solid var(--brand-primary);
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #e2e2e2;
+            transition: transform 0.2s, box-shadow 0.2s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .img-box {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .img-box img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .btn-whatsapp-order {
+            background-color: #25d366;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 6px;
+            width: 100%;
+            padding: 8px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-whatsapp-order:hover {
+            background-color: #1ebd56;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--brand-primary);
+        }
+    </style>
+</head>
+<body>
+
     <!-- الهيدر الرئيسي -->
     <header class="main-header text-white py-3">
         <div class="container d-flex justify-content-between align-items-center">
