@@ -1,9 +1,10 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: abbas561/dhiqar-store
   branch: main
 
-media_folder: "website/uploads"
-public_folder: "/uploads"
+media_folder: "website/images"
+public_folder: "/website/images"
 
 collections:
   - name: "products"
@@ -13,234 +14,18 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "اسم المنتج", name: "title", widget: "string" }
-      - { label: "السعر ($)", name: "price", widget: "number", value_type: "float", required: false }
+      - { label: "السعر", name: "price", widget: "number", value_type: "float" }
+      - { label: "القسم", name: "category", widget: "select", options: [
+          "playstation",
+          "يد",
+          "تجميعات",
+          "شاشات_قيمنق",
+          "ريترو",
+          "راوتر",
+          "كيبورد",
+          "ssd",
+          "ups",
+          "اشتراك"
+        ]}
       - { label: "صورة المنتج", name: "image", widget: "image" }
-      - { 
-          label: "القسم", 
-          name: "category", 
-          widget: "select", 
-          options: [
-            { label: "يديات التحكم", value: "controllers" },
-            { label: "أجهزة المحاكاة والريترو", value: "retro-consoles" },
-            { label: "أجهزة Mini PC", value: "mini-pc" },
-            { label: "قطع الحاسوب والتجميعات", value: "hardware" },
-            { label: "الراوترات والشبكات", value: "routers" }
-          ] 
-        }
-      - { label: "تفاصيل ووصف المنتج", name: "body", widget: "markdown", required: false }        }
-
-        .product-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-        }
-
-        .img-box {
-            height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-            background: #fff;
-            border-radius: 6px;
-        }
-
-        .img-box img {
-            max-height: 100%;
-            max-width: 100%;
-            object-fit: contain;
-        }
-
-        .btn-whatsapp-order {
-            background-color: #25d366;
-            color: white !important;
-            font-weight: bold;
-            border-radius: 6px;
-            border: none;
-            padding: 8px;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Header -->
-    <header class="main-header py-3 text-white text-center">
-        <a href="index.html" class="text-white text-decoration-none h3 fw-bold">
-            امزون <span style="color: var(--brand-primary);">ذي قار</span>
-        </a>
-    </header>
-
-    <div class="container my-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold" id="categoryTitle">جاري تحميل القسم...</h4>
-            <a href="index.html" class="btn btn-outline-dark btn-sm"><i class="fas fa-arrow-right me-1"></i> العودة للرئيسية</a>
-        </div>
-
-        <!-- حاوية المنتجات -->
-        <div class="row g-3" id="productsContainer">
-            <div class="col-12 text-center py-5">
-                <div class="spinner-border text-warning" role="status"></div>
-                <p class="mt-2 text-muted">جاري تصفية المنتجات...</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- JS Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.min.js"></script>
-
-    <script>
-        async function loadCategoryProducts() {
-            const container = document.getElementById('productsContainer');
-            const categoryTitleEl = document.getElementById('categoryTitle');
-
-            // قراءة نوع القسم من رابط الصفحة (مثلاً category.html?type=controllers)
-            const urlParams = new URLSearchParams(window.location.search);
-            const selectedCategory = urlParams.get('type') || 'all';
-
-            categoryTitleEl.textContent = selectedCategory === 'all' ? 'جميع المنتجات' : `قسم: ${selectedCategory}`;
-
-            try {
-                const repoOwner = "abbas561";
-                const repoName = "dhiqar-store";
-                const folderPath = "content/products";
-                const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
-
-                const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error("تعذر الوصول لبيانات المنتجات.");
-
-                const files = await response.json();
-                container.innerHTML = '';
-                let productCount = 0;
-
-                for (let file of files) {
-                    if (file.name.endsWith('.md')) {
-                        const rawRes = await fetch(file.download_url);
-                        const rawText = await rawRes.text();
-                        const yamlMatch = rawText.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-
-                        if (yamlMatch && yamlMatch[1]) {
-                            const data = jsyaml.load(yamlMatch[1]);
-                            
-                            // فلترة المنتجات حسب القسم (أو عرض الكل إذا كان الاختيار all)
-                            const productCategory = data.category || data.type || '';
-                            if (selectedCategory === 'all' || productCategory === selectedCategory) {
-                                
-                                const title = data.title || 'منتج بدون عنوان';
-                                const price = data.price ? `$${data.price}` : 'اتصل بالسعر';
-                                const image = data.image || 'https://via.placeholder.com/300';
-                                const whatsappMsg = encodeURIComponent(`السلام عليكم، أرغب في استفسار/طلب: ${title}`);
-
-                                container.innerHTML += `
-                                    <div class="col-6 col-md-3">
-                                        <div class="product-card p-2 h-100 d-flex flex-column justify-content-between">
-                                            <div>
-                                                <div class="img-box">
-                                                    <img src="${image}" alt="${title}" onerror="this.src='https://via.placeholder.com/300'">
-                                                </div>
-                                                <h6 class="fw-bold fs-6 mb-1 mt-2 text-truncate" title="${title}">${title}</h6>
-                                                <p class="text-warning fw-bold small mb-2">${price}</p>
-                                            </div>
-                                            <a href="https://wa.me/9647822980189?text=${whatsappMsg}" target="_blank" class="btn btn-whatsapp-order text-center text-decoration-none">
-                                                <i class="fab fa-whatsapp me-1"></i> طلب عبر واتساب
-                                            </a>
-                                        </div>
-                                    </div>
-                                `;
-                                productCount++;
-                            }
-                        }
-                    }
-                }
-
-                if (productCount === 0) {
-                    container.innerHTML = `<div class="col-12 text-center text-muted py-5">لا توجد منتجات مضافة في هذا القسم حالياً.</div>`;
-                }
-
-            } catch (error) {
-                container.innerHTML = `<div class="col-12 text-center text-danger py-5">${error.message}</div>`;
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', loadCategoryProducts);
-    </script>
-</body>
-</html>          - "الطاقة والبطاريات وUPS"
-          - "الخرائط والإلكترونيات"
-          - "الساعات والإكسسوارات"
-          - "ألعاب ومستلزمات الأطفال"
-
-      # القسم الفرعي
-      - label: "القسم الفرعي"
-        name: "subcategory"
-        widget: "select"
-        options:
-          # الملابس والأزياء
-          - "ملابس رجالية"
-          - "ملابس نسائية"
-          - "ملابس أطفال"
-          - "الأحذية والحقائب"
-
-          # الأجهزة والتمريض الطبي
-          - "أجهزة قياس الضغط والسكر"
-          - "أجهزة النبض والمحرار الحراري"
-          - "أجهزة تبخير وعلاج التنفس"
-          - "مستلزمات العناية الصحية والتدليك"
-
-          # العدد والأدوات اليدوية
-          - "المفكات، الملاقط والكالبات"
-          - "أجهزة ومفكات شحن كهربائية"
-          - "أجهزة ومستلزمات اللحام الإلكتروني"
-          - "أجهزة القياس والفحص الدقيق"
-
-          # مستلزمات التجميل والعناية
-          - "أجهزة سشوار وتسريح الشعر"
-          - "ماكينات الحلاقة والعناية الشخصية"
-          - "أدوات العناية بالبشرة والوجه"
-
-          # أدوات وأجهزة المطبخ
-          - "أجهزة المطبخ الكهربائية"
-          - "أواني وأدوات الطبخ الحديثة"
-          - "صانعات القهوة والمشروبات"
-
-          # الإنارة والإضاءة الحديثة
-          - "إضاءة RGB والإنارة الذكية"
-          - "مصابيح المكاتب والشحن LED"
-          - "الكشافات والإنارة الخارجية"
-
-          # الحاسبات وقطع التجميع
-          - "أجهزة المني بيسي (Mini PC)"
-          - "المعالجات (CPUs)"
-          - "كروت الشاشة (GPUs)"
-          - "المذربوردات (Motherboards)"
-          - "الرامات والتخزين (RAM & SSD)"
-          - "التبريد ومزودات الطاقة (PSU)"
-
-          # الشاشات وأجهزة العرض
-          - "شاشات القيمنق المنحنية (OLED/Ultrawide)"
-          - "الشاشات المحمولة (Portable Display)"
-
-          # الكونسول واليديات والألعاب
-          - "أجهزة المحاكاة والألعاب القديمة (Retro)"
-          - "يديات التحكم المغناطيسية (Hall Effect)"
-          - "كيبوردات الجيمنج والماوسات"
-
-          # الراوترات وأنظمة الشبكات
-          - "راوترات OpenWrt وتوزيع الحمل"
-          - "راوترات Wi-Fi 6/7 وأجهزة 5G CPE"
-          - "السويتشات والمقويات والكبسولات"
-
-          # الطاقة والبطاريات وUPS
-          - "لوحات إدارة البطاريات (BMS)"
-          - "خلايا بطاريات الليثيوم"
-          - "أجهزة UPS والمحولات الكهربائية"
-
-          # الخرائط والإلكترونيات
-          - "أجهزة الميكروکنترولر وRaspberry Pi"
-          - "الخرائط الإلكترونية وقطع الصيانة"
-
-          # الساعات والإكسسوارات
-          - "الساعات الكرونوغراف والأنيقة"
-          - "المسابح والحجر الطبيعي (اليسر)"
-
-          # ألعاب ومستلزمات الأطفال
-          - "الألعاب الذكية والتعليمية"
-          - "مستلزمات الأطفال العامة"
+      - { label: "وصف المنتج والمواصفات", name: "description", widget: "text" }
