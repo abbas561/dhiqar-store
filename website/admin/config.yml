@@ -18,3 +18,4 @@ collections:
       - { label: "السعر ($)", name: "price", widget: "number", value_type: "float" }
       - { label: "الكمية المتوفرة", name: "quantity", widget: "number", default: 1 }
       - { label: "غير متوفر بالمخزن (شطب)", name: "out_of_stock", widget: "boolean", default: false }
+      - { label: "القسم", name: "category", widget: "select", options: ["يد التحكم", "الشبكات والراوترات", "كمبيوتر وملحقاته"] }
