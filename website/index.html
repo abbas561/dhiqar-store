@@ -107,6 +107,16 @@
             background-color: #fef5e7;
             color: #11161d;
         }
+
+        .cat-item-link {
+            transition: background-color 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .cat-item-link:hover {
+            background-color: #f8f9fa;
+            color: var(--brand-primary) !important;
+        }
     </style>
 </head>
 <body>
@@ -138,109 +148,171 @@
         </div>
     </main>
 
-    <!-- Sidebar Menu with Complete Categories -->
+    <!-- Sidebar Menu with Expanded Categories (10 Sections) -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="categoriesSidebar">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title"><i class="fa-solid fa-list me-2"></i>أقسام المتجر</h5>
+            <h5 class="offcanvas-title"><i class="fa-solid fa-list me-2"></i>تصفح أقسام المتجر الكاملة</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body p-0">
             <div class="accordion accordion-flush" id="categoriesAccordion">
                 
-                <!-- 1. الكونسول واليديات والألعاب -->
+                <!-- 1. اجهزة الكونسول والألعاب -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat1">
-                            <i class="fa-solid fa-gamepad me-2 text-warning"></i> الكونسول واليديات والألعاب
+                            <i class="fa-solid fa-gamepad me-2 text-warning"></i> أجهزة الكونسول والألعاب
                         </button>
                     </h2>
                     <div id="cat1" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="/website/index.html?filter=يد" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">يديات التحكم والماكرو</a>
-                            <a href="/website/index.html?filter=كونسول" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">أجهزة الكونسول (بلايستيشن/إكس بوكس)</a>
-                            <a href="/website/index.html?filter=مترو" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">أجهزة المحمول والريترو (Handheld)</a>
-                            <a href="/website/index.html?filter=العاب" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">أقراص وحسابات الألعاب</a>
+                            <a href="/website/index.html?filter=playstation" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">PlayStation 5 / 4</a>
+                            <a href="/website/index.html?filter=xbox" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">Xbox Series X / S</a>
+                            <a href="/website/index.html?filter=nintendo" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">Nintendo Switch</a>
+                            <a href="/website/index.html?filter=اقراص" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">أقراص وأشرطة ألعاب</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2. الحاسبات والتجميعات -->
+                <!-- 2. يديات التحكم وملحقاتها -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat2">
-                            <i class="fa-solid fa-desktop me-2 text-warning"></i> الحاسبات والتجميعات
+                            <i class="fa-solid fa-headset me-2 text-warning"></i> يديات التحكم واكسسواراتها
                         </button>
                     </h2>
                     <div id="cat2" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="/website/index.html?filter=تجميع" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">تجميعات القيمنق والعمل</a>
-                            <a href="/website/index.html?filter=ميني" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">Mini PC وأجهزة المكاتب</a>
-                            <a href="/website/index.html?filter=لاب" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">حاسبات محمول (لابتوب)</a>
-                            <a href="/website/index.html?filter=شاش" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">شاشات العرض والـ OLED</a>
+                            <a href="/website/index.html?filter=يد" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">يديات التحكم الاحترافية والمغناطيسية</a>
+                            <a href="/website/index.html?filter=شواحن_يديات" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">قواعد شحن اليديات والستاندات</a>
+                            <a href="/website/index.html?filter=مقابض" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">مقابض حماية وكفرات اليديات</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. الراوترات والشبكات -->
+                <!-- 3. الحاسبات واللابتوبات -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat3">
-                            <i class="fa-solid fa-wifi me-2 text-warning"></i> الراوترات والشبكات
+                            <i class="fa-solid fa-laptop me-2 text-warning"></i> الحاسبات واللابتوبات
                         </button>
                     </h2>
                     <div id="cat3" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="/website/index.html?filter=راوتر" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">راوترات Wi-Fi 6 / 7</a>
-                            <a href="/website/index.html?filter=5g" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">راوترات 5G وModems</a>
-                            <a href="/website/index.html?filter=شبك" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">مقويات الشبكة والـ Switches</a>
+                            <a href="/website/index.html?filter=تجميعات" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">تجميعات قيمنق كاملة</a>
+                            <a href="/website/index.html?filter=لابتوب" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">لابتوبات القيمنق والدراسة</a>
+                            <a href="/website/index.html?filter=ميني_بيسي" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">أجهزة Mini PC المكتبية</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 4. الأجهزة الذكية والملحقات -->
+                <!-- 4. الشاشات وأجهزة العرض -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat4">
-                            <i class="fa-solid fa-mobile-screen-button me-2 text-warning"></i> الأجهزة الذكية والملحقات
+                            <i class="fa-solid fa-tv me-2 text-warning"></i> الشاشات وأجهزة العرض
                         </button>
                     </h2>
                     <div id="cat4" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="/website/index.html?filter=سماع" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">سماعات رأس وسماعات أذن</a>
-                            <a href="/website/index.html?filter=ماوس" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">ماوسات وكيبوردات ميكانيكية</a>
-                            <a href="/website/index.html?filter=اكسسوار" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">إكسسوارات وكابلات توصيل</a>
+                            <a href="/website/index.html?filter=شاشات_قيمنق" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">شاشات العاب OLED ومقعرة</a>
+                            <a href="/website/index.html?filter=شاشات_محمولة" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">شاشات عرض محمولة (Portable)</a>
+                            <a href="/website/index.html?filter=حوامل_شاشات" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">حوامل هيدروليكية للشاشات</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 5. قطع التحديث والصيانة -->
+                <!-- 5. أجهزة الألعاب المحمولة والريترو -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat5">
-                            <i class="fa-solid fa-microchip me-2 text-warning"></i> قطع التحديث والصيانة
+                            <i class="fa-solid fa-mobile-retro me-2 text-warning"></i> أجهزة المحمول والريترو
                         </button>
                     </h2>
                     <div id="cat5" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="/website/index.html?filter=تخزين" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">وحدات تخزين SSD / NVMe & RAM</a>
-                            <a href="/website/index.html?filter=كارت" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">كروت الشاشة والمعالجات</a>
-                            <a href="/website/index.html?filter=باور" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">باور سبلاي وأنظمة التبريد</a>
-                            <a href="/website/index.html?filter=قطع" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">قطع إلكترونية ومعدات صيانة</a>
+                            <a href="/website/index.html?filter=ريترو" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">أجهزة محاكاة ألعاب الطيبين (Anbernic/Kinhank)</a>
+                            <a href="/website/index.html?filter=مساعد_محمول" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">حواسب ألعاب محمولة (Steam Deck / ROG Ally)</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 6. البطاقات الشحن والاشتراكات -->
+                <!-- 6. الراوترات والشبكات المتطورة -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat6">
-                            <i class="fa-solid fa-credit-card me-2 text-warning"></i> كروت الشحن والاشتراكات
+                            <i class="fa-solid fa-wifi me-2 text-warning"></i> الراوترات ومعدات الشبكات
                         </button>
                     </h2>
                     <div id="cat6" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="/website/index.html?filter=كرت" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">بطاقات شحن بلايستيشن وإكس بوكس</a>
-                            <a href="/website/index.html?filter=اشتراك" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">اشتراكات السيرفرات والبرامج</a>
+                            <a href="/website/index.html?filter=راوتر" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">راوترات Wi-Fi 6 / 6E / Wi-Fi 7</a>
+                            <a href="/website/index.html?filter=openwrt" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">راوترات المعدلة بروم OpenWrt</a>
+                            <a href="/website/index.html?filter=5g" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">راوترات 5G وModems متطورة</a>
+                            <a href="/website/index.html?filter=شبكة" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">السويتشات ومقويات الإشارة والكابلات</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. الماوسات والكيبوردات والسماعات -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat7">
+                            <i class="fa-solid fa-keyboard me-2 text-warning"></i> الملحقات والطرفيات
+                        </button>
+                    </h2>
+                    <div id="cat7" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
+                        <div class="accordion-body p-0">
+                            <a href="/website/index.html?filter=كيبورد" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">كيبوردات ميكانيكية ومغناطيسية</a>
+                            <a href="/website/index.html?filter=ماوس" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">ماوسات الاحترافية والماوس باد</a>
+                            <a href="/website/index.html?filter=سماعات" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">سماعات رأس وميكروفونات القيمنق</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. قطع الغيار والتحديثات (PC Hardware) -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat8">
+                            <i class="fa-solid fa-microchip me-2 text-warning"></i> قطع الكمبيوتر والتحديث
+                        </button>
+                    </h2>
+                    <div id="cat8" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
+                        <div class="accordion-body p-0">
+                            <a href="/website/index.html?filter=ssd" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">وحدات تخزين SSD NVMe وذواكر RAM</a>
+                            <a href="/website/index.html?filter=gpu" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">كروت الشاشة والمعالجات (CPU / GPU)</a>
+                            <a href="/website/index.html?filter=تبريد" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">باور سبلاي وأنظمة التبريد المائي والهوائي</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. معدات الصيانة والإلكترونيات -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat9">
+                            <i class="fa-solid fa-wrench me-2 text-warning"></i> معدات الصيانة والكهرباء
+                        </button>
+                    </h2>
+                    <div id="cat9" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
+                        <div class="accordion-body p-0">
+                            <a href="/website/index.html?filter=ups" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">أجهزة UPS والعواكس الكهربائية</a>
+                            <a href="/website/index.html?filter=صيانة" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">أدوات اللحيم وفحص الأجهزة الإلكترونية</a>
+                            <a href="/website/index.html?filter=قطع_الكترونية" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">مكونات إلكترونية ومحولات طاقة</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. الاشتراكات والبطاقات الرقمية -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat10">
+                            <i class="fa-solid fa-credit-card me-2 text-warning"></i> بطاقات الشحن والاشتراكات
+                        </button>
+                    </h2>
+                    <div id="cat10" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
+                        <div class="accordion-body p-0">
+                            <a href="/website/index.html?filter=كروت_شحن" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">بطاقات PlayStore, PlayStation & Xbox</a>
+                            <a href="/website/index.html?filter=اشتراك" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom cat-item-link">اشتراكات السيرفرات والبرامج والـ VPN</a>
                         </div>
                     </div>
                 </div>
@@ -261,7 +333,7 @@
             const filterKey = urlParams.get('filter');
 
             if (filterKey) {
-                document.getElementById('section-heading').innerText = `تصفية حسب: ${filterKey}`;
+                document.getElementById('section-heading').innerText = `التصفية حسب: ${filterKey.replace('_', ' ')}`;
             }
 
             try {
