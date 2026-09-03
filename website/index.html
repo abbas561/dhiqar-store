@@ -131,7 +131,6 @@
         </div>
     </main>
 
-    <!-- القائمة الجانبية المحدثة بالأقسام -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="categoriesSidebar">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title"><i class="fa-solid fa-list me-2"></i>أقسام المتجر</h5>
@@ -191,13 +190,23 @@
         const REPO_NAME = 'dhiqar-store';
         const BRANCH = 'main';
 
+        async function fetchGitHubJSON(path) {
+            try {
+                const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${path}`);
+                if (!res.ok) return null;
+                return await res.json();
+            } catch (e) {
+                return null;
+            }
+        }
+
         async function loadProducts() {
             document.getElementById('page-title').innerText = "جميع المنتجات";
             const container = document.getElementById('products-container');
             container.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-warning"></div><p class="mt-2 text-muted">جاري تحميل المنتجات...</p></div>`;
 
             try {
-                const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/website/products`);
+                const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/products`);
                 if(!res.ok) {
                     container.innerHTML = '<p class="text-center text-muted">لا توجد منتجات حالياً.</p>';
                     return;
@@ -205,12 +214,18 @@
                 const files = await res.json();
                 container.innerHTML = '';
 
+                let count = 0;
                 for(let file of files) {
                     if(file.name.endsWith('.json')) {
-                        const productRes = await fetch(file.download_url);
-                        const product = await productRes.json();
-                        renderCard(product, container);
+                        const product = await fetchGitHubJSON(`content/products/${file.name}`);
+                        if(product) {
+                            renderCard(product, container);
+                            count++;
+                        }
                     }
+                }
+                if(count === 0) {
+                    container.innerHTML = '<p class="text-center text-muted">لا توجد منتجات مضافة بعد.</p>';
                 }
             } catch(e) {
                 container.innerHTML = '<p class="text-center text-danger">حدث خطأ في جلب البيانات.</p>';
@@ -224,7 +239,7 @@
             container.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-warning"></div><p class="mt-2 text-muted">جاري التصفية...</p></div>`;
 
             try {
-                const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/website/products`);
+                const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/products`);
                 if(!res.ok) return;
                 const files = await res.json();
                 container.innerHTML = '';
@@ -232,9 +247,8 @@
 
                 for(let file of files) {
                     if(file.name.endsWith('.json')) {
-                        const productRes = await fetch(file.download_url);
-                        const product = await productRes.json();
-                        if(product.category === categoryName || !categoryName) {
+                        const product = await fetchGitHubJSON(`content/products/${file.name}`);
+                        if(product && (product.category === categoryName || !categoryName)) {
                             renderCard(product, container);
                             count++;
                         }
