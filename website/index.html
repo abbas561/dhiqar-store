@@ -153,7 +153,7 @@
                         <div class="accordion-body p-0">
                             <a href="/website/index.html?filter=يديات" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">يديات التحكم</a>
                             <a href="/website/index.html?filter=كونسول" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">أجهزة الكونسول</a>
-                            <a href="/website/index.html?filter=العاب" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">الألعاب أقراص وحسابات</a>
+                            <a href="/website/index.html?filter=العاب" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">الألعاب</a>
                         </div>
                     </div>
                 </div>
@@ -168,7 +168,7 @@
                     <div id="cat2" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
                             <a href="/website/index.html?filter=تجميع" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">تجميعات الكمبيوتر</a>
-                            <a href="/website/index.html?filter=لاب توب" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">حاسبات محمول (لابتوب)</a>
+                            <a href="/website/index.html?filter=لاب" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">حاسبات محمول (لابتوب)</a>
                             <a href="/website/index.html?filter=شاش" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">شاشات العرض</a>
                         </div>
                     </div>
@@ -184,7 +184,7 @@
                     <div id="cat3" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
                             <a href="/website/index.html?filter=راوتر" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">راوترات Wi-Fi</a>
-                            <a href="/website/index.html?filter=شبكات" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">معدات ومقويات الشبكة</a>
+                            <a href="/website/index.html?filter=شبك" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">معدات ومقويات الشبكة</a>
                         </div>
                     </div>
                 </div>
@@ -198,7 +198,7 @@
                     </h2>
                     <div id="cat4" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="/website/index.html?filter=سماعات" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">سماعات وHeadsets</a>
+                            <a href="/website/index.html?filter=سماع" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">سماعات وHeadsets</a>
                             <a href="/website/index.html?filter=ماوس" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">ماوس وكيبوردات</a>
                             <a href="/website/index.html?filter=اكسسوار" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">إكسسوارات متنوعة</a>
                         </div>
@@ -235,42 +235,56 @@
             const urlParams = new URLSearchParams(window.location.search);
             const filterKey = urlParams.get('filter');
 
-            if(filterKey) {
+            if (filterKey) {
                 document.getElementById('section-heading').innerText = `القسم: ${filterKey}`;
             }
 
             try {
+                // جلب قائمة الملفات
                 const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/products`);
-                if(!res.ok) {
+                
+                if (!res.ok) {
                     container.innerHTML = '<p class="text-center text-muted py-5">لا توجد منتجات متوفرة حالياً.</p>';
                     return;
                 }
 
                 const files = await res.json();
+
+                if (!Array.isArray(files) || files.length === 0) {
+                    container.innerHTML = '<p class="text-center text-muted py-5">لا توجد منتجات متوفرة حالياً.</p>';
+                    return;
+                }
+
+                const jsonFiles = files.filter(f => f.name.endsWith('.json'));
+
+                // جلب المنتجات بالتوازي لسرعة الأداء
+                const productPromises = jsonFiles.map(file => 
+                    fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/content/products/${file.name}`)
+                        .then(r => r.ok ? r.json() : null)
+                        .catch(() => null)
+                );
+
+                const products = (await Promise.all(productPromises)).filter(Boolean);
+
                 container.innerHTML = '';
                 let count = 0;
 
-                for(const file of files) {
-                    if(file.name.endsWith('.json')) {
-                        const rawRes = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/content/products/${file.name}`);
-                        if(rawRes.ok) {
-                            const product = await rawRes.json();
-                            const catStr = (product.category || '').toLowerCase();
-                            const titleStr = (product.title || '').toLowerCase();
+                for (const product of products) {
+                    const catStr = (product.category || '').toLowerCase();
+                    const titleStr = (product.title || '').toLowerCase();
 
-                            if(!filterKey || catStr.includes(filterKey.toLowerCase()) || titleStr.includes(filterKey.toLowerCase())) {
-                                renderCard(product, container);
-                                count++;
-                            }
-                        }
+                    if (!filterKey || catStr.includes(filterKey.toLowerCase()) || titleStr.includes(filterKey.toLowerCase())) {
+                        renderCard(product, container);
+                        count++;
                     }
                 }
 
-                if(count === 0) {
-                    container.innerHTML = '<p class="text-center text-muted py-5">لا توجد منتجات متوفرة في هذا القسم حالياً.</p>';
+                if (count === 0) {
+                    container.innerHTML = '<p class="text-center text-muted py-5">لا توجد منتجات مطابقة لهذا القسم.</p>';
                 }
 
-            } catch(e) {
+            } catch (e) {
+                console.error(e);
                 container.innerHTML = '<p class="text-center text-danger py-5">حدث خطأ أثناء تحميل البيانات.</p>';
             }
         }
