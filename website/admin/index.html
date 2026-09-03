@@ -4,40 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>لوحة إدارة المتجر</title>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
+    <!-- Decap CMS Script -->
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <script>
-        window.CMS_MANUAL_INIT = true;
-        CMS.init({
-            config: {
-                backend: {
-                    name: 'github',
-                    repo: 'abbas561/dhiqar-store',
-                    branch: 'main',
-                    base_url: 'https://decap-cms-oauth-provider.vercel.app',
-                    auth_endpoint: 'api/auth'
-                },
-                media_folder: 'website/images',
-                public_folder: '/website/images',
-                collections: [
-                    {
-                        name: 'products',
-                        label: 'المنتجات',
-                        folder: 'content/products',
-                        create: true,
-                        slug: '{{slug}}',
-                        fields: [
-                            { label: 'اسم المنتج', name: 'title', widget: 'string' },
-                            { label: 'السعر', name: 'price', widget: 'number', value_type: 'float' },
-                            { label: 'القسم', name: 'category', widget: 'string' },
-                            { label: 'صورة المنتج', name: 'image', widget: 'image' },
-                            { label: 'وصف المنتج', name: 'description', widget: 'text' }
-                        ]
-                    }
-                ]
-            }
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.reload();
+            });
+          }
         });
+      }
     </script>
 </body>
 </html>
