@@ -32,7 +32,8 @@ description: >-
   تصميم مريح وقبضة مانعة للانزلاق: مقابض جانبية بجودة عالية مصممة للجلسات الطويلة.
 price: 65000
 quantity: 1
-out_of_stock: false
+main_category: الكونسول واليديات والألعاب
 category: الكونسول واليديات والألعاب
+out_of_stock: false
 subcategory: يديات التحكم المغناطيسية (Hall Effect)
 ---
