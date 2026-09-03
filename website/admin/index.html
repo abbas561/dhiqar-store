@@ -8,41 +8,5 @@
 <body>
     <!-- Decap CMS Script -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <script>
-      window.CMS_MANUAL_INIT = true;
-      CMS.init({
-        config: {
-          backend: {
-            name: 'github',
-            repo: 'abbas561/dhiqar-store',
-            branch: 'main',
-            auth_type: 'implicit'
-          },
-          media_folder: 'website/images',
-          public_folder: '/website/images',
-          collections: [
-            {
-              name: 'products',
-              label: 'المنتجات',
-              folder: 'content/products',
-              create: true,
-              slug: '{{slug}}',
-              fields: [
-                { label: 'اسم المنتج', name: 'title', widget: 'string' },
-                { label: 'السعر', name: 'price', widget: 'number', value_type: 'float' },
-                { 
-                  label: 'القسم', 
-                  name: 'category', 
-                  widget: 'select', 
-                  options: ['راوتر', 'يد', 'تجميعات', 'شاشات_قيمنق', 'ريترو', 'كيبورد', 'ssd', 'ups', 'اشتراك'] 
-                },
-                { label: 'صورة المنتج', name: 'image', widget: 'image' },
-                { label: 'وصف المنتج والمواصفات', name: 'description', widget: 'text' }
-              ]
-            }
-          ]
-        }
-      });
-    </script>
 </body>
 </html>
