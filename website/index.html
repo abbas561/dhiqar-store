@@ -11,7 +11,7 @@
     
     <style>
         :root {
-            --brand-primary: #f3a847; /* اللون البرتقالي الذهبي من الشعار */
+            --brand-primary: #f3a847;
             --brand-secondary: #e47911;
             --dark-header: #11161d;
             --sub-header: #1d2531;
@@ -79,25 +79,6 @@
             background-color: var(--dark-header);
             color: #fff;
             border-bottom: 2px solid var(--brand-primary);
-        }
-
-        .category-menu-list .list-group-item {
-            border: none;
-            border-bottom: 1px solid #eee;
-            padding: 12px 15px;
-            font-weight: 600;
-        }
-
-        .category-menu-list a {
-            color: #333;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .category-menu-list a:hover {
-            color: var(--brand-secondary);
         }
 
         .sidebar-accordion .accordion-button {
@@ -231,7 +212,6 @@
         .btn-facebook { background-color: #1877f2; }
         .btn-phone { background-color: var(--brand-primary); color: #11161d !important; }
 
-        /* شريط تواصل ثابت في أسفل الشاشة للموبايل */
         .sticky-contact-bar {
             position: fixed;
             bottom: 0;
@@ -250,7 +230,6 @@
     <header class="main-header py-3 text-white">
         <div class="container text-center">
             <a href="index.html" class="brand-logo-container">
-                <!-- يمكنك تغيير اسم ملف الصورة هنا ليطابق مسار الصورة لديك مثل logo.jpg -->
                 <img src="1000285337.jpg" alt="امزون ذي قار" class="brand-logo-img" onerror="this.style.display='none'">
                 <span class="brand-logo-text">امزون <span>ذي قار</span></span>
             </a>
@@ -270,7 +249,7 @@
         </div>
     </div>
 
-    <!-- المنيو الجانبي الشامل -->
+    <!-- المنيو الجانبي الشامل (الأقسام الرئيسية والفرعية) -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title fw-bold" id="sidebarMenuLabel"><i class="fas fa-list text-warning me-2"></i>أقسام المتجر الشاملة</h5>
@@ -280,7 +259,7 @@
             
             <div class="accordion accordion-flush sidebar-accordion" id="categoryAccordion">
 
-                <!-- 1. الحاسبات وقطع الكمبيوتر -->
+                <!-- 1. الحاسبات وقطع التجميع -->
                 <div class="accordion-item border-bottom">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-pc">
@@ -299,7 +278,7 @@
                     </div>
                 </div>
 
-                <!-- 2. الشاشات وملحقات العرض -->
+                <!-- 2. الشاشات وأجهزة العرض -->
                 <div class="accordion-item border-bottom">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-monitors">
@@ -314,7 +293,7 @@
                     </div>
                 </div>
 
-                <!-- 3. ألعاب الكونسول وأجهزة ألعاب الرجعية -->
+                <!-- 3. ألعاب الكونسول والملحقات -->
                 <div class="accordion-item border-bottom">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-gaming">
@@ -330,7 +309,7 @@
                     </div>
                 </div>
 
-                <!-- 4. الراوترات ومعدات الشبكات -->
+                <!-- 4. الراوترات والشبكات -->
                 <div class="accordion-item border-bottom">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-routers">
@@ -346,7 +325,7 @@
                     </div>
                 </div>
 
-                <!-- 5. أنظمة الطاقة والبطاريات وBMS -->
+                <!-- 5. أنظمة الطاقة والبطاريات -->
                 <div class="accordion-item border-bottom">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-power">
@@ -362,7 +341,7 @@
                     </div>
                 </div>
 
-                <!-- 6. الخرائط الإلكترونية والمتحكمات -->
+                <!-- 6. الخرائط والمتحكمات -->
                 <div class="accordion-item border-bottom">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-electronics">
@@ -377,17 +356,37 @@
                     </div>
                 </div>
 
-            </div>
+                <!-- 7. الساعات والأدوات الشخصية -->
+                <div class="accordion-item border-bottom">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-accessories">
+                            <i class="fas fa-clock text-warning me-2"></i> الساعات والإكسسوارات
+                        </button>
+                    </h2>
+                    <div id="acc-accessories" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                        <div class="accordion-body">
+                            <a href="category.html?type=watches" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> الساعات الكرونوغراف والأنيقة</a>
+                            <a href="category.html?type=rosaries" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> المسابح والحجر الطبيعي (اليسر)</a>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- أقسام مباشرة إضافية -->
-            <ul class="list-group category-menu-list rounded-0">
-                <li class="list-group-item">
-                    <a href="category.html?type=watches"><span><i class="fas fa-clock text-warning me-2"></i> الساعات والإكسسوارات</span> <i class="fas fa-chevron-left text-muted small"></i></a>
-                </li>
-                <li class="list-group-item">
-                    <a href="category.html?type=kids"><span><i class="fas fa-shapes text-warning me-2"></i> ألعاب ومستلزمات الأطفال</span> <i class="fas fa-chevron-left text-muted small"></i></a>
-                </li>
-            </ul>
+                <!-- 8. ألعاب ومستلزمات الأطفال -->
+                <div class="accordion-item border-bottom">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acc-kids">
+                            <i class="fas fa-shapes text-warning me-2"></i> ألعاب ومستلزمات الأطفال
+                        </button>
+                    </h2>
+                    <div id="acc-kids" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                        <div class="accordion-body">
+                            <a href="category.html?type=kids-toys" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> الألعاب الذكية والتعليمية</a>
+                            <a href="category.html?type=kids-supplies" class="sub-category-link"><i class="fas fa-angle-left me-2"></i> مستلزمات الأطفال العامة</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
     </div>
@@ -409,7 +408,7 @@
 
         <div class="row g-3">
 
-            <!-- منتج 1: معالج -->
+            <!-- منتج 1 -->
             <div class="col-6 col-md-3">
                 <div class="product-card p-2 h-100 d-flex flex-column justify-content-between">
                     <div>
@@ -421,7 +420,7 @@
                 </div>
             </div>
 
-            <!-- منتج 2: كرت شاشة -->
+            <!-- منتج 2 -->
             <div class="col-6 col-md-3">
                 <div class="product-card p-2 h-100 d-flex flex-column justify-content-between">
                     <div>
@@ -433,7 +432,7 @@
                 </div>
             </div>
 
-            <!-- منتج 3: مني بيسي -->
+            <!-- منتج 3 -->
             <div class="col-6 col-md-3">
                 <div class="product-card p-2 h-100 d-flex flex-column justify-content-between">
                     <div>
@@ -445,7 +444,7 @@
                 </div>
             </div>
 
-            <!-- منتج 4: راوتر -->
+            <!-- منتج 4 -->
             <div class="col-6 col-md-3">
                 <div class="product-card p-2 h-100 d-flex flex-column justify-content-between">
                     <div>
