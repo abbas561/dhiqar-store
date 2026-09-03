@@ -17,11 +17,11 @@ collections:
       - { label: "الوصف", name: "description", widget: "text" }
       - { label: "السعر ($)", name: "price", widget: "number", value_type: "float" }
       - { label: "الكمية المتوفرة", name: "quantity", widget: "number", default: 1 }
-      - { label: "غير متوفر بالمتحر", name: "out_of_stock", widget: "boolean", default: false }
+      - { label: "غير متوفر بالمتجر", name: "out_of_stock", widget: "boolean", default: false }
 
       # القسم الرئيسي
       - label: "القسم الرئيسي"
-        name: "main_category"
+        name: "category"
         widget: "select"
         options:
           - "الملابس والأزياء"
@@ -105,7 +105,7 @@ collections:
           - "أجهزة UPS والمحولات الكهربائية"
 
           # الخرائط والإلكترونيات
-          - "أجهزة الميكروكنترولر وRaspberry Pi"
+          - "أجهزة الميكروکنترولر وRaspberry Pi"
           - "الخرائط الإلكترونية وقطع الصيانة"
 
           # الساعات والإكسسوارات
