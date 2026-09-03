@@ -2,6 +2,7 @@ backend:
   name: github
   repo: abbas561/dhiqar-store
   branch: main
+  auth_type: implicit
 
 media_folder: "website/images"
 public_folder: "/website/images"
@@ -16,15 +17,14 @@ collections:
       - { label: "اسم المنتج", name: "title", widget: "string" }
       - { label: "السعر", name: "price", widget: "number", value_type: "float" }
       - { label: "القسم", name: "category", widget: "select", options: [
-          "playstation",
-          "يد",
-          "تجميعات",
-          "شاشات_قيمنق",
-          "ريترو",
-          "راوتر",
-          "كيبورد",
-          "ssd",
-          "ups",
+          "راوتر", 
+          "يد", 
+          "تجميعات", 
+          "شاشات_قيمنق", 
+          "ريترو", 
+          "كيبورد", 
+          "ssd", 
+          "ups", 
           "اشتراك"
         ]}
       - { label: "صورة المنتج", name: "image", widget: "image" }
