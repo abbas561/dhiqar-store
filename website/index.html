@@ -217,10 +217,14 @@
                 let count = 0;
                 for(let file of files) {
                     if(file.name.endsWith('.json')) {
-                        const product = await fetchGitHubJSON(`content/products/${file.name}`);
-                        if(product) {
-                            renderCard(product, container);
-                            count++;
+                        try {
+                            const product = await fetchGitHubJSON(`content/products/${file.name}`);
+                            if(product) {
+                                renderCard(product, container);
+                                count++;
+                            }
+                        } catch(err) {
+                            console.error(err);
                         }
                     }
                 }
@@ -233,29 +237,44 @@
         }
 
         async function filterByCategory(categoryName) {
-            document.getElementById('closeSidebarBtn').click();
+            const closeBtn = document.getElementById('closeSidebarBtn');
+            if (closeBtn) closeBtn.click();
+            
             document.getElementById('page-title').innerText = categoryName;
             const container = document.getElementById('products-container');
             container.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-warning"></div><p class="mt-2 text-muted">جاري التصفية...</p></div>`;
 
             try {
                 const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/products`);
-                if(!res.ok) return;
+                if(!res.ok) {
+                    container.innerHTML = '<p class="text-center text-muted">تعذر الاتصال بـ GitHub</p>';
+                    return;
+                }
                 const files = await res.json();
                 container.innerHTML = '';
                 let count = 0;
 
                 for(let file of files) {
                     if(file.name.endsWith('.json')) {
-                        const product = await fetchGitHubJSON(`content/products/${file.name}`);
-                        if(product && (product.category === categoryName || !categoryName)) {
-                            renderCard(product, container);
-                            count++;
+                        try {
+                            const product = await fetchGitHubJSON(`content/products/${file.name}`);
+                            if(product) {
+                                // المقارنة المرنة مع اسم القسم
+                                const pCat = (product.category || '').trim().toLowerCase();
+                                const targetCat = (categoryName || '').trim().toLowerCase();
+                                
+                                if(!categoryName || pCat.includes(targetCat) || targetCat.includes(pCat)) {
+                                    renderCard(product, container);
+                                    count++;
+                                }
+                            }
+                        } catch(err) {
+                            console.error(err);
                         }
                     }
                 }
                 if(count === 0) {
-                    container.innerHTML = `<p class="text-center text-muted my-5">لا توجد منتجات متوفرة في قسم "${categoryName}".</p>`;
+                    container.innerHTML = `<p class="text-center text-muted my-5">لا توجد منتجات متوفرة حالياً في هذا القسم.</p>`;
                 }
             } catch(e) {
                 container.innerHTML = '<p class="text-center text-danger">حدث خطأ أثناء التصفية.</p>';
@@ -268,20 +287,21 @@
                 imgUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}${imgUrl}`;
             }
 
-            container.innerHTML += `
-                <div class="col-6 col-md-4 col-lg-3">
-                    <div class="product-card p-3">
-                        <div class="img-box">
-                            <img src="${imgUrl}" alt="${product.title}">
-                        </div>
-                        <h6 class="text-truncate mt-2" title="${product.title}">${product.title}</h6>
-                        <p class="text-warning fw-bold mb-2">$${product.price || 0}</p>
-                        <a href="https://wa.me/?text=${encodeURIComponent('أريد طلب: ' + product.title)}" target="_blank" class="btn-whatsapp-order">
-                            <i class="fa-brands fa-whatsapp me-1"></i> طلب عبر واتساب
-                        </a>
+            const col = document.createElement('div');
+            col.className = 'col-6 col-md-4 col-lg-3';
+            col.innerHTML = `
+                <div class="product-card p-3">
+                    <div class="img-box">
+                        <img src="${imgUrl}" alt="${product.title || ''}">
                     </div>
+                    <h6 class="text-truncate mt-2" title="${product.title || ''}">${product.title || 'منتج'}</h6>
+                    <p class="text-warning fw-bold mb-2">$${product.price || 0}</p>
+                    <a href="https://wa.me/?text=${encodeURIComponent('أريد طلب: ' + (product.title || ''))}" target="_blank" class="btn-whatsapp-order">
+                        <i class="fa-brands fa-whatsapp me-1"></i> طلب عبر واتساب
+                    </a>
                 </div>
             `;
+            container.appendChild(col);
         }
 
         document.addEventListener('DOMContentLoaded', loadProducts);
