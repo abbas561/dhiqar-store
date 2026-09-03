@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>امزون ذي قار</title>
     
-    <!-- Bootstrap RTL & FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -107,7 +106,7 @@
 </head>
 <body>
 
-    <!-- Header Section -->
+    <!-- Header -->
     <header class="main-header text-white py-3">
         <div class="container d-flex justify-content-between align-items-center">
             <h1 class="h3 m-0 font-weight-bold">
@@ -119,11 +118,11 @@
         </div>
     </header>
 
-    <!-- Main Content Area -->
+    <!-- Main Section -->
     <main class="container my-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="h4 m-0 section-title" id="page-title">جميع المنتجات</h2>
-            <button class="btn btn-sm btn-outline-dark" onclick="loadProducts()">عرض الكل</button>
+            <h2 class="h4 m-0 section-title">أحدث المنتجات</h2>
+            <a href="/website/index.html" class="btn btn-sm btn-outline-dark">إعادة تحديث</a>
         </div>
         
         <div class="row g-3" id="products-container">
@@ -134,16 +133,15 @@
         </div>
     </main>
 
-    <!-- Categories Sidebar -->
+    <!-- Sidebar Menu -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="categoriesSidebar">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title"><i class="fa-solid fa-list me-2"></i>أقسام المتجر</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" id="closeSidebarBtn"></button>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body p-0">
             <div class="accordion accordion-flush" id="categoriesAccordion">
                 
-                <!-- Category 1 -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat1">
@@ -152,13 +150,12 @@
                     </h2>
                     <div id="cat1" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('يديات', 'يديات التحكم')">يديات التحكم</a>
-                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('كونسول', 'أجهزة الكونسول')">أجهزة الكونسول</a>
+                            <a href="/website/index.html?filter=يديات" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">يديات التحكم</a>
+                            <a href="/website/index.html?filter=كونسول" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">أجهزة الكونسول</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Category 2 -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat2">
@@ -167,13 +164,12 @@
                     </h2>
                     <div id="cat2" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('تجميع', 'تجميعات الكمبيوتر')">تجميعات الكمبيوتر</a>
-                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('شاش', 'شاشات العرض')">شاشات العرض</a>
+                            <a href="/website/index.html?filter=تجميع" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">تجميعات الكمبيوتر</a>
+                            <a href="/website/index.html?filter=شاش" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">شاشات العرض</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Category 3 -->
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat3">
@@ -182,7 +178,7 @@
                     </h2>
                     <div id="cat3" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                         <div class="accordion-body p-0">
-                            <a href="#" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom" onclick="filterByCategory('راوتر', 'راوترات Wi-Fi')">راوترات Wi-Fi</a>
+                            <a href="/website/index.html?filter=راوتر" class="d-block p-2 ps-4 text-decoration-none text-dark border-bottom">راوترات Wi-Fi</a>
                         </div>
                     </div>
                 </div>
@@ -191,37 +187,54 @@
         </div>
     </div>
 
-    <!-- Application JavaScript Logic -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const REPO_OWNER = 'abbas561';
         const REPO_NAME = 'dhiqar-store';
         const BRANCH = 'main';
 
-        // 1. Safe Fetch for JSON Content
-        async function fetchJSON(path) {
-            try {
-                const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${path}?t=${Date.now()}`);
-                return res.ok ? await res.json() : null;
-            } catch (e) {
-                return null;
-            }
-        }
+        async function init() {
+            const container = document.getElementById('products-container');
+            const urlParams = new URLSearchParams(window.location.search);
+            const filterKey = urlParams.get('filter');
 
-        // 2. Fetch All Products File List
-        async function getProductFiles() {
             try {
-                const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/products?t=${Date.now()}`);
-                if (!res.ok) return [];
+                const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/products`);
+                if(!res.ok) {
+                    container.innerHTML = '<p class="text-center text-muted py-5">لا توجد منتجات متوفرة حالياً.</p>';
+                    return;
+                }
+
                 const files = await res.json();
-                return files.filter(f => f.name.endsWith('.json'));
-            } catch (e) {
-                return [];
+                container.innerHTML = '';
+                let count = 0;
+
+                for(const file of files) {
+                    if(file.name.endsWith('.json')) {
+                        const rawRes = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/content/products/${file.name}`);
+                        if(rawRes.ok) {
+                            const product = await rawRes.json();
+                            const catStr = (product.category || '').toLowerCase();
+                            const titleStr = (product.title || '').toLowerCase();
+
+                            if(!filterKey || catStr.includes(filterKey.toLowerCase()) || titleStr.includes(filterKey.toLowerCase())) {
+                                renderCard(product, container);
+                                count++;
+                            }
+                        }
+                    }
+                }
+
+                if(count === 0) {
+                    container.innerHTML = '<p class="text-center text-muted py-5">لا توجد منتجات مطابقة لهذا القسم.</p>';
+                }
+
+            } catch(e) {
+                container.innerHTML = '<p class="text-center text-danger py-5">حدث خطأ أثناء تحميل البيانات.</p>';
             }
         }
 
-        // 3. Render Card Element
-        function createProductCard(product) {
+        function renderCard(product, container) {
             let imgUrl = product.image || 'https://via.placeholder.com/200';
             if (imgUrl.startsWith('/')) {
                 imgUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}${imgUrl}`;
@@ -241,66 +254,10 @@
                     </a>
                 </div>
             `;
-            return col;
+            container.appendChild(col);
         }
 
-        // 4. Load All Products
-        async function loadProducts() {
-            document.getElementById('page-title').innerText = "جميع المنتجات";
-            const container = document.getElementById('products-container');
-            container.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-warning"></div><p class="mt-2 text-muted">جاري تحميل المنتجات...</p></div>`;
-
-            const files = await getProductFiles();
-            container.innerHTML = '';
-
-            if (files.length === 0) {
-                container.innerHTML = '<p class="text-center text-muted py-5">لا توجد منتجات متوفرة حالياً.</p>';
-                return;
-            }
-
-            for (const file of files) {
-                const product = await fetchJSON(`content/products/${file.name}`);
-                if (product) {
-                    container.appendChild(createProductCard(product));
-                }
-            }
-        }
-
-        // 5. Smart Flexible Filtering
-        async function filterByCategory(keyword, displayTitle) {
-            const closeBtn = document.getElementById('closeSidebarBtn');
-            if (closeBtn) closeBtn.click();
-
-            document.getElementById('page-title').innerText = displayTitle || keyword;
-            const container = document.getElementById('products-container');
-            container.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-warning"></div><p class="mt-2 text-muted">جاري البحث في القسم...</p></div>`;
-
-            const files = await getProductFiles();
-            container.innerHTML = '';
-            let count = 0;
-
-            for (const file of files) {
-                const product = await fetchJSON(`content/products/${file.name}`);
-                if (product) {
-                    const pCategory = (product.category || '').toLowerCase();
-                    const pTitle = (product.title || '').toLowerCase();
-                    const searchKey = keyword.toLowerCase();
-
-                    // مطابقة مرنة على القسم أو العنوان
-                    if (pCategory.includes(searchKey) || pTitle.includes(searchKey)) {
-                        container.appendChild(createProductCard(product));
-                        count++;
-                    }
-                }
-            }
-
-            if (count === 0) {
-                container.innerHTML = `<p class="text-center text-muted py-5">لا توجد منتجات متوفرة في قسم "${displayTitle || keyword}".</p>`;
-            }
-        }
-
-        // Run On Load
-        document.addEventListener('DOMContentLoaded', loadProducts);
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
