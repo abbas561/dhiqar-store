@@ -602,6 +602,91 @@
             }
         }
 
+        <!-- إضافة مكتبة قراءة ملفات Decap YAML -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.min.js"></script>
+
+<script>
+    async function fetchProducts() {
+        const container = document.getElementById('productsContainer');
+        
+        try {
+            // استخدام GitHub REST API لجلب قائمة الملفات
+            const repoOwner = "abbas561";
+            const repoName = "dhiqar-store";
+            const folderPath = "content/products";
+            
+            const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
+
+            const response = await fetch(apiUrl);
+
+            if (response.status === 404) {
+                throw new Error("المستودع خاس (Private) أو المجلد غير موجود. يرجى التنزيل لأسفل هذه الصفحة في GitHub وتغيير Visibility إلى Public.");
+            }
+
+            if (!response.ok) {
+                throw new Error("حدث خطأ أثناء جلب البيانات من GitHub.");
+            }
+
+            const files = await response.json();
+            container.innerHTML = '';
+
+            let productCount = 0;
+
+            for (let file of files) {
+                // قراءة ملفات التدوين الخاص بـ Decap CMS (.md)
+                if (file.name.endsWith('.md')) {
+                    const rawRes = await fetch(file.download_url);
+                    const rawText = await rawRes.text();
+
+                    // استخراج بيانات الـ YAML Frontmatter بين علامات ---
+                    const yamlMatch = rawText.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+                    
+                    if (yamlMatch && yamlMatch[1]) {
+                        const data = jsyaml.load(yamlMatch[1]);
+
+                        const title = data.title || 'منتج بدون عنوان';
+                        const price = data.price ? `$${data.price}` : 'اتصل بالسعر';
+                        const image = data.image || 'https://via.placeholder.com/300';
+                        const whatsappMsg = encodeURIComponent(`السلام عليكم، أرغب في استفسار/طلب: ${title}`);
+
+                        container.innerHTML += `
+                            <div class="col-6 col-md-3">
+                                <div class="product-card p-2 h-100 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="img-box">
+                                            <img src="${image}" alt="${title}" onerror="this.src='https://via.placeholder.com/300'">
+                                        </div>
+                                        <h6 class="fw-bold fs-6 mb-1 mt-2 text-truncate" title="${title}">${title}</h6>
+                                        <p class="text-warning fw-bold small mb-2">${price}</p>
+                                    </div>
+                                    <a href="https://wa.me/9647822980189?text=${whatsappMsg}" target="_blank" class="btn btn-whatsapp-order text-center text-decoration-none">
+                                        <i class="fab fa-whatsapp me-1"></i> طلب عبر واتساب
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                        productCount++;
+                    }
+                }
+            }
+
+            if (productCount === 0) {
+                container.innerHTML = `<div class="col-12 text-center text-muted py-4">لم يتم العثور على منتجات داخل مجلد content/products.</div>`;
+            }
+
+        } catch (error) {
+            container.innerHTML = `
+                <div class="col-12 text-center py-4">
+                    <p class="text-danger fw-bold mb-1"><i class="fas fa-exclamation-triangle me-2"></i>${error.message}</p>
+                    <p class="text-muted small">تأكد من جعل المستودع Public من خيار Danger Zone في أسفل صفحة Settings.</p>
+                </div>
+            `;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchProducts);
+</script>
+
         document.addEventListener('DOMContentLoaded', fetchProducts);
     </script>
 </body>
