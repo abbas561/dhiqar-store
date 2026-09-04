@@ -17,14 +17,15 @@ collections:
       - { label: "اسم المنتج", name: "title", widget: "string" }
       - { label: "السعر", name: "price", widget: "number", value_type: "float" }
       - { label: "القسم", name: "category", widget: "select", options: [
-          "راوتر", 
-          "يد", 
-          "تجميعات", 
-          "شاشات_قيمنق", 
-          "ريترو", 
-          "كيبورد", 
-          "ssd", 
-          "ups", 
+          "playstation",
+          "يد",
+          "تجميعات",
+          "شاشات_قيمنق",
+          "ريترو",
+          "راوتر",
+          "كيبورد",
+          "ssd",
+          "ups",
           "اشتراك"
         ]}
       - { label: "صورة المنتج", name: "image", widget: "image" }
